@@ -2,6 +2,11 @@
 
 this is a test ...
 
+### command
+
+terraform init
+terraform plan
+terraform apply
 
 
 ### Reference 
