@@ -159,6 +159,20 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
         storage_account_uri = azurerm_storage_account.mystorageaccount.primary_blob_endpoint
     }
 
+
+    # เริ่ม
+    os_profile {
+        computer_name  = var.linux_vm_hostname
+        admin_username = var.linux_admin_user
+        admin_password = var.linux_admin_password
+        custom_data    = file("azure-user-data.sh")
+    }
+
+    os_profile_linux_config {
+        disable_password_authentication = false
+    }
+    
+
     tags = {
         environment = "Terraform Demo"
     }
