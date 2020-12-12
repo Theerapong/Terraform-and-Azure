@@ -161,17 +161,14 @@ resource "azurerm_linux_virtual_machine" "myterraformvm" {
 
 
     # เริ่ม
-    os_profile {
-        computer_name  = var.linux_vm_hostname
-        admin_username = var.linux_admin_user
-        admin_password = var.linux_admin_password
-        custom_data    = file("azure-user-data.sh")
-    }
+    module "run_command" {
+    source               = "innovationnorway/vm-run-command/azurerm"
+    resource_group_name  = "${azurerm_resource_group.main.name}"
+    virtual_machine_name = "${azurerm_virtual_machine.main.name}"
+    os_type              = "linux"
 
-    os_profile_linux_config {
-        disable_password_authentication = false
+    command = "apt-get install -y curl"
     }
-    
 
     tags = {
         environment = "Terraform Demo"
